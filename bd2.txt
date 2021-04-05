@@ -1,0 +1,937 @@
+admin1@admin1-HP-280-G4-MT-Business-PC:~$ wget https://downloads.mongodb.com/compass/mongodb-compass_1.26.0_amd64.deb
+--2021-03-31 08:59:00--  https://downloads.mongodb.com/compass/mongodb-compass_1.26.0_amd64.deb
+Resolving downloads.mongodb.com (downloads.mongodb.com)... 13.33.171.129, 13.33.171.11, 13.33.171.80, ...
+Connecting to downloads.mongodb.com (downloads.mongodb.com)|13.33.171.129|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 89015616 (85M) [application/octet-stream]
+Saving to: ‘mongodb-compass_1.26.0_amd64.deb’
+
+mongodb-compass_1.2 100%[===================>]  84.89M  69.2MB/s    in 1.2s    
+
+2021-03-31 08:59:01 (69.2 MB/s) - ‘mongodb-compass_1.26.0_amd64.deb’ saved [89015616/89015616]
+
+admin1@admin1-HP-280-G4-MT-Business-PC:~$ sudo dpkg -i mongodb-compass_1.26.0_amd64.deb
+[sudo] password for admin1: 
+Selecting previously unselected package mongodb-compass.
+(Reading database ... 213838 files and directories currently installed.)
+Preparing to unpack mongodb-compass_1.26.0_amd64.deb ...
+Unpacking mongodb-compass (1.26.0) ...
+dpkg: dependency problems prevent configuration of mongodb-compass:
+ mongodb-compass depends on libgconf-2-4 | libgconf2-4; however:
+  Package libgconf-2-4 is not installed.
+  Package libgconf2-4 is not installed.
+ mongodb-compass depends on libgconf-2-4; however:
+  Package libgconf-2-4 is not installed.
+
+dpkg: error processing package mongodb-compass (--install):
+ dependency problems - leaving unconfigured
+Processing triggers for desktop-file-utils (0.24-1ubuntu3) ...
+Processing triggers for gnome-menus (3.36.0-1ubuntu1) ...
+Processing triggers for mime-support (3.64ubuntu1) ...
+Errors were encountered while processing:
+ mongodb-compass
+admin1@admin1-HP-280-G4-MT-Business-PC:~$ mongodb-compass
+^Z
+[1]+  Stopped                 mongodb-compass
+admin1@admin1-HP-280-G4-MT-Business-PC:~$ sudo systemctl enable mongod
+[sudo] password for admin1: 
+admin1@admin1-HP-280-G4-MT-Business-PC:~$ mongodb-compass
+^Z[1]   Killed                  mongodb-compass
+
+[2]+  Stopped                 mongodb-compass
+admin1@admin1-HP-280-G4-MT-Business-PC:~$ mongo
+MongoDB shell version v4.4.4
+connecting to: mongodb://127.0.0.1:27017/?compressors=disabled&gssapiServiceName=mongodb
+Implicit session: session { "id" : UUID("30073e1d-19f7-4ff9-ba8a-c9bc0c492683") }
+MongoDB server version: 4.4.4
+---
+The server generated these startup warnings when booting: 
+        2021-03-31T08:56:04.327+05:30: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine. See http://dochub.mongodb.org/core/prodnotes-filesystem
+        2021-03-31T08:56:17.478+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+---
+---
+        Enable MongoDB's free cloud-based monitoring service, which will then receive and display
+        metrics about your deployment (disk utilization, CPU, operation statistics, etc).
+
+        The monitoring data will be available on a MongoDB website with a unique URL accessible to you
+        and anyone you share the URL with. MongoDB may use this information to make product
+        improvements and to suggest MongoDB products and deployment options to you.
+
+        To enable free monitoring, run the following command: db.enableFreeMonitoring()
+        To permanently disable this reminder, run the following command: db.disableFreeMonitoring()
+---
+> db
+test
+> show dbs
+Company  0.000GB
+Student  0.000GB
+admin    0.000GB
+config   0.000GB
+db       0.000GB
+ipl      0.000GB
+local    0.000GB
+mydb     0.000GB
+mynewdb  0.000GB
+newdb    0.000GB
+test     0.000GB
+> use Company
+switched to db Company
+> show collections
+Empdetails
+> db.Empdetails.aggregate([{]]);
+uncaught exception: SyntaxError: expected property name, got ']' :
+@(shell):1:26
+> db.Empdetails.aggregate([{}]);
+uncaught exception: Error: command failed: {
+	"ok" : 0,
+	"errmsg" : "A pipeline stage specification object must contain exactly one field.",
+	"code" : 40323,
+	"codeName" : "Location40323"
+} : aggregate failed :
+_getErrorWithCode@src/mongo/shell/utils.js:25:13
+doassert@src/mongo/shell/assert.js:18:14
+_assertCommandWorked@src/mongo/shell/assert.js:639:17
+assert.commandWorked@src/mongo/shell/assert.js:729:16
+DB.prototype._runAggregate@src/mongo/shell/db.js:266:5
+DBCollection.prototype.aggregate@src/mongo/shell/collection.js:1058:12
+@(shell):1:1
+> db.Empdetails.aggregate([{}])
+uncaught exception: Error: command failed: {
+	"ok" : 0,
+	"errmsg" : "A pipeline stage specification object must contain exactly one field.",
+	"code" : 40323,
+	"codeName" : "Location40323"
+} : aggregate failed :
+_getErrorWithCode@src/mongo/shell/utils.js:25:13
+doassert@src/mongo/shell/assert.js:18:14
+_assertCommandWorked@src/mongo/shell/assert.js:639:17
+assert.commandWorked@src/mongo/shell/assert.js:729:16
+DB.prototype._runAggregate@src/mongo/shell/db.js:266:5
+DBCollection.prototype.aggregate@src/mongo/shell/collection.js:1058:12
+@(shell):1:1
+> db.Empdetails.aggregate({})
+uncaught exception: Error: command failed: {
+	"ok" : 0,
+	"errmsg" : "A pipeline stage specification object must contain exactly one field.",
+	"code" : 40323,
+	"codeName" : "Location40323"
+} : aggregate failed :
+_getErrorWithCode@src/mongo/shell/utils.js:25:13
+doassert@src/mongo/shell/assert.js:18:14
+_assertCommandWorked@src/mongo/shell/assert.js:639:17
+assert.commandWorked@src/mongo/shell/assert.js:729:16
+DB.prototype._runAggregate@src/mongo/shell/db.js:266:5
+DBCollection.prototype.aggregate@src/mongo/shell/collection.js:1058:12
+@(shell):1:1
+> db.Empdetails.aggregate([])
+{ "_id" : 1, "Fname" : "Rohan", "Lname" : "Sharma", "age" : 26, "email" : "rsharma@gmail.com", "phone" : "9007008001", "exp" : 5 }
+{ "_id" : 2, "Fname" : "Rahul", "Lname" : "Roy", "age" : 24, "email" : "rahulroy@gmail.com", "phone" : "8946412341", "exp" : 6 }
+{ "_id" : 3, "Fname" : "Rachel", "Lname" : "Green", "age" : 23, "email" : "rgreen@gmail.com", "phone" : "783952399", "exp" : 3 }
+{ "_id" : 4, "Fname" : "Nikita", "Lname" : "Sharma", "age" : 27, "email" : "nsharma@gmail.com", "phone" : "3214357812", "exp" : 2 }
+{ "_id" : 5, "Fname" : "Harsh", "Lname" : "Gupta", "age" : 24, "email" : "hargupta@gmail.com", "phone" : "3253468820", "exp" : 7 }
+{ "_id" : 6, "Fname" : "Faizah", "Lname" : "Ali", "age" : 30, "email" : "faizah@gmail.com", "phone" : "9436466601", "exp" : 8 }
+{ "_id" : 7, "Fname" : "Apoorva", "Lname" : "rai", "age" : 18, "email" : "apoorva@gmail.com", "phone" : "8949325441", "exp" : 1 }
+{ "_id" : 8, "Fname" : "leo", "Lname" : "brown", "age" : 19, "email" : "lbrown@gmail.com", "phone" : "7623483569", "exp" : 2 }
+{ "_id" : 9, "Fname" : "Teo", "Lname" : "Smith", "age" : 28, "email" : "teo@gmail.com", "phone" : "3216667182", "exp" : 10 }
+{ "_id" : 10, "Fname" : "Ria", "Lname" : "Vinod", "age" : 27, "email" : "ria@gmail.com", "phone" : "8231468820", "exp" : 7 }
+> 
+> 
+> db.Empdetails.aggregate{$sort: {age:-1}}
+uncaught exception: SyntaxError: unexpected token: '{' :
+@(shell):1:23
+\>{$sort: {age:-1}}
+-1
+> {$match: {age:25}}
+25
+> {$match: {age:24}}
+24
+> db.Empdetails.aggregate([{$sort: {age:-1}}])
+{ "_id" : 6, "Fname" : "Faizah", "Lname" : "Ali", "age" : 30, "email" : "faizah@gmail.com", "phone" : "9436466601", "exp" : 8 }
+{ "_id" : 9, "Fname" : "Teo", "Lname" : "Smith", "age" : 28, "email" : "teo@gmail.com", "phone" : "3216667182", "exp" : 10 }
+{ "_id" : 4, "Fname" : "Nikita", "Lname" : "Sharma", "age" : 27, "email" : "nsharma@gmail.com", "phone" : "3214357812", "exp" : 2 }
+{ "_id" : 10, "Fname" : "Ria", "Lname" : "Vinod", "age" : 27, "email" : "ria@gmail.com", "phone" : "8231468820", "exp" : 7 }
+{ "_id" : 1, "Fname" : "Rohan", "Lname" : "Sharma", "age" : 26, "email" : "rsharma@gmail.com", "phone" : "9007008001", "exp" : 5 }
+{ "_id" : 2, "Fname" : "Rahul", "Lname" : "Roy", "age" : 24, "email" : "rahulroy@gmail.com", "phone" : "8946412341", "exp" : 6 }
+{ "_id" : 5, "Fname" : "Harsh", "Lname" : "Gupta", "age" : 24, "email" : "hargupta@gmail.com", "phone" : "3253468820", "exp" : 7 }
+{ "_id" : 3, "Fname" : "Rachel", "Lname" : "Green", "age" : 23, "email" : "rgreen@gmail.com", "phone" : "783952399", "exp" : 3 }
+{ "_id" : 8, "Fname" : "leo", "Lname" : "brown", "age" : 19, "email" : "lbrown@gmail.com", "phone" : "7623483569", "exp" : 2 }
+{ "_id" : 7, "Fname" : "Apoorva", "Lname" : "rai", "age" : 18, "email" : "apoorva@gmail.com", "phone" : "8949325441", "exp" : 1 }
+> db.Empdetails.aggregate([{$match: {age:25}}])
+> 
+> 
+> db.Empdetails.aggregate([{$match: {age:24}}])
+{ "_id" : 2, "Fname" : "Rahul", "Lname" : "Roy", "age" : 24, "email" : "rahulroy@gmail.com", "phone" : "8946412341", "exp" : 6 }
+{ "_id" : 5, "Fname" : "Harsh", "Lname" : "Gupta", "age" : 24, "email" : "hargupta@gmail.com", "phone" : "3253468820", "exp" : 7 }
+> db.Empdetails.aggregate([{$match: {age:{$gt:24}}}])
+{ "_id" : 1, "Fname" : "Rohan", "Lname" : "Sharma", "age" : 26, "email" : "rsharma@gmail.com", "phone" : "9007008001", "exp" : 5 }
+{ "_id" : 4, "Fname" : "Nikita", "Lname" : "Sharma", "age" : 27, "email" : "nsharma@gmail.com", "phone" : "3214357812", "exp" : 2 }
+{ "_id" : 6, "Fname" : "Faizah", "Lname" : "Ali", "age" : 30, "email" : "faizah@gmail.com", "phone" : "9436466601", "exp" : 8 }
+{ "_id" : 9, "Fname" : "Teo", "Lname" : "Smith", "age" : 28, "email" : "teo@gmail.com", "phone" : "3216667182", "exp" : 10 }
+{ "_id" : 10, "Fname" : "Ria", "Lname" : "Vinod", "age" : 27, "email" : "ria@gmail.com", "phone" : "8231468820", "exp" : 7 }
+> 
+> 
+> db.Empdetails.aggregate([{$group: {_id:"$age}}])
+uncaught exception: SyntaxError: "" literal not terminated before end of script :
+@(shell):1:48
+> db.Empdetails.aggregate([{$group: {_id:"$age"}}])
+{ "_id" : 30 }
+{ "_id" : 19 }
+{ "_id" : 28 }
+{ "_id" : 24 }
+{ "_id" : 27 }
+{ "_id" : 23 }
+{ "_id" : 18 }
+{ "_id" : 26 }
+> db.Empdetails.aggregate([{$group: {_id:"$age",name:"$name"}}])
+uncaught exception: Error: command failed: {
+	"ok" : 0,
+	"errmsg" : "The field 'name' must be an accumulator object",
+	"code" : 40234,
+	"codeName" : "Location40234"
+} : aggregate failed :
+_getErrorWithCode@src/mongo/shell/utils.js:25:13
+doassert@src/mongo/shell/assert.js:18:14
+_assertCommandWorked@src/mongo/shell/assert.js:639:17
+assert.commandWorked@src/mongo/shell/assert.js:729:16
+DB.prototype._runAggregate@src/mongo/shell/db.js:266:5
+DBCollection.prototype.aggregate@src/mongo/shell/collection.js:1058:12
+@(shell):1:1
+> db.Empdetails.aggregate([{$group: {_id:{age:"$age",name:"$name"}}])
+... 
+... 
+> 
+> db.Empdetails.aggregate([{$group: {_id:"$age",Fname:"$Fname"}}])
+uncaught exception: Error: command failed: {
+	"ok" : 0,
+	"errmsg" : "The field 'Fname' must be an accumulator object",
+	"code" : 40234,
+	"codeName" : "Location40234"
+} : aggregate failed :
+_getErrorWithCode@src/mongo/shell/utils.js:25:13
+doassert@src/mongo/shell/assert.js:18:14
+_assertCommandWorked@src/mongo/shell/assert.js:639:17
+assert.commandWorked@src/mongo/shell/assert.js:729:16
+DB.prototype._runAggregate@src/mongo/shell/db.js:266:5
+DBCollection.prototype.aggregate@src/mongo/shell/collection.js:1058:12
+@(shell):1:1
+> 
+> 
+> 
+> 
+> db.Empdetails.aggregate([{$group: {_id:"$age}}])
+uncaught exception: SyntaxError: "" literal not terminated before end of script :
+@(shell):1:48
+> 
+> 
+> db.Empdetails.aggregate([{$group: {_id:"$age"}}])
+{ "_id" : 28 }
+{ "_id" : 26 }
+{ "_id" : 30 }
+{ "_id" : 18 }
+{ "_id" : 23 }
+{ "_id" : 27 }
+{ "_id" : 24 }
+{ "_id" : 19 }
+admin1@admin1-HP-280-G4-MT-Business-PC:~$ wget https://downloads.mongodb.com/compass/mongodb-compass_1.26.0_amd64.deb
+--2021-03-31 08:59:00--  https://downloads.mongodb.com/compass/mongodb-compass_1.26.0_amd64.deb
+Resolving downloads.mongodb.com (downloads.mongodb.com)... 13.33.171.129, 13.33.171.11, 13.33.171.80, ...
+Connecting to downloads.mongodb.com (downloads.mongodb.com)|13.33.171.129|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 89015616 (85M) [application/octet-stream]
+Saving to: ‘mongodb-compass_1.26.0_amd64.deb’
+
+mongodb-compass_1.2 100%[===================>]  84.89M  69.2MB/s    in 1.2s    
+
+2021-03-31 08:59:01 (69.2 MB/s) - ‘mongodb-compass_1.26.0_amd64.deb’ saved [89015616/89015616]
+
+admin1@admin1-HP-280-G4-MT-Business-PC:~$ sudo dpkg -i mongodb-compass_1.26.0_amd64.deb
+[sudo] password for admin1: 
+Selecting previously unselected package mongodb-compass.
+(Reading database ... 213838 files and directories currently installed.)
+Preparing to unpack mongodb-compass_1.26.0_amd64.deb ...
+Unpacking mongodb-compass (1.26.0) ...
+dpkg: dependency problems prevent configuration of mongodb-compass:
+ mongodb-compass depends on libgconf-2-4 | libgconf2-4; however:
+  Package libgconf-2-4 is not installed.
+  Package libgconf2-4 is not installed.
+ mongodb-compass depends on libgconf-2-4; however:
+  Package libgconf-2-4 is not installed.
+
+dpkg: error processing package mongodb-compass (--install):
+ dependency problems - leaving unconfigured
+Processing triggers for desktop-file-utils (0.24-1ubuntu3) ...
+Processing triggers for gnome-menus (3.36.0-1ubuntu1) ...
+Processing triggers for mime-support (3.64ubuntu1) ...
+Errors were encountered while processing:
+ mongodb-compass
+admin1@admin1-HP-280-G4-MT-Business-PC:~$ mongodb-compass
+^Z
+[1]+  Stopped                 mongodb-compass
+admin1@admin1-HP-280-G4-MT-Business-PC:~$ sudo systemctl enable mongod
+[sudo] password for admin1: 
+admin1@admin1-HP-280-G4-MT-Business-PC:~$ mongodb-compass
+^Z[1]   Killed                  mongodb-compass
+
+[2]+  Stopped                 mongodb-compass
+admin1@admin1-HP-280-G4-MT-Business-PC:~$ mongo
+MongoDB shell version v4.4.4
+connecting to: mongodb://127.0.0.1:27017/?compressors=disabled&gssapiServiceName=mongodb
+Implicit session: session { "id" : UUID("30073e1d-19f7-4ff9-ba8a-c9bc0c492683") }
+MongoDB server version: 4.4.4
+---
+The server generated these startup warnings when booting: 
+        2021-03-31T08:56:04.327+05:30: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine. See http://dochub.mongodb.org/core/prodnotes-filesystem
+        2021-03-31T08:56:17.478+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+---
+---
+        Enable MongoDB's free cloud-based monitoring service, which will then receive and display
+        metrics about your deployment (disk utilization, CPU, operation statistics, etc).
+
+        The monitoring data will be available on a MongoDB website with a unique URL accessible to you
+        and anyone you share the URL with. MongoDB may use this information to make product
+        improvements and to suggest MongoDB products and deployment options to you.
+
+        To enable free monitoring, run the following command: db.enableFreeMonitoring()
+        To permanently disable this reminder, run the following command: db.disableFreeMonitoring()
+---
+> db
+test
+> show dbs
+Company  0.000GB
+Student  0.000GB
+admin    0.000GB
+config   0.000GB
+db       0.000GB
+ipl      0.000GB
+local    0.000GB
+mydb     0.000GB
+mynewdb  0.000GB
+newdb    0.000GB
+test     0.000GB
+> use Company
+switched to db Company
+> show collections
+Empdetails
+> db.Empdetails.aggregate([{]]);
+uncaught exception: SyntaxError: expected property name, got ']' :
+@(shell):1:26
+> db.Empdetails.aggregate([{}]);
+uncaught exception: Error: command failed: {
+	"ok" : 0,
+	"errmsg" : "A pipeline stage specification object must contain exactly one field.",
+	"code" : 40323,
+	"codeName" : "Location40323"
+} : aggregate failed :
+_getErrorWithCode@src/mongo/shell/utils.js:25:13
+doassert@src/mongo/shell/assert.js:18:14
+_assertCommandWorked@src/mongo/shell/assert.js:639:17
+assert.commandWorked@src/mongo/shell/assert.js:729:16
+DB.prototype._runAggregate@src/mongo/shell/db.js:266:5
+DBCollection.prototype.aggregate@src/mongo/shell/collection.js:1058:12
+@(shell):1:1
+> db.Empdetails.aggregate([{}])
+uncaught exception: Error: command failed: {
+	"ok" : 0,
+	"errmsg" : "A pipeline stage specification object must contain exactly one field.",
+	"code" : 40323,
+	"codeName" : "Location40323"
+} : aggregate failed :
+_getErrorWithCode@src/mongo/shell/utils.js:25:13
+doassert@src/mongo/shell/assert.js:18:14
+_assertCommandWorked@src/mongo/shell/assert.js:639:17
+assert.commandWorked@src/mongo/shell/assert.js:729:16
+DB.prototype._runAggregate@src/mongo/shell/db.js:266:5
+DBCollection.prototype.aggregate@src/mongo/shell/collection.js:1058:12
+@(shell):1:1
+> db.Empdetails.aggregate({})
+uncaught exception: Error: command failed: {
+	"ok" : 0,
+	"errmsg" : "A pipeline stage specification object must contain exactly one field.",
+	"code" : 40323,
+	"codeName" : "Location40323"
+} : aggregate failed :
+_getErrorWithCode@src/mongo/shell/utils.js:25:13
+doassert@src/mongo/shell/assert.js:18:14
+_assertCommandWorked@src/mongo/shell/assert.js:639:17
+assert.commandWorked@src/mongo/shell/assert.js:729:16
+DB.prototype._runAggregate@src/mongo/shell/db.js:266:5
+DBCollection.prototype.aggregate@src/mongo/shell/collection.js:1058:12
+@(shell):1:1
+> db.Empdetails.aggregate([])
+{ "_id" : 1, "Fname" : "Rohan", "Lname" : "Sharma", "age" : 26, "email" : "rsharma@gmail.com", "phone" : "9007008001", "exp" : 5 }
+{ "_id" : 2, "Fname" : "Rahul", "Lname" : "Roy", "age" : 24, "email" : "rahulroy@gmail.com", "phone" : "8946412341", "exp" : 6 }
+{ "_id" : 3, "Fname" : "Rachel", "Lname" : "Green", "age" : 23, "email" : "rgreen@gmail.com", "phone" : "783952399", "exp" : 3 }
+{ "_id" : 4, "Fname" : "Nikita", "Lname" : "Sharma", "age" : 27, "email" : "nsharma@gmail.com", "phone" : "3214357812", "exp" : 2 }
+{ "_id" : 5, "Fname" : "Harsh", "Lname" : "Gupta", "age" : 24, "email" : "hargupta@gmail.com", "phone" : "3253468820", "exp" : 7 }
+{ "_id" : 6, "Fname" : "Faizah", "Lname" : "Ali", "age" : 30, "email" : "faizah@gmail.com", "phone" : "9436466601", "exp" : 8 }
+{ "_id" : 7, "Fname" : "Apoorva", "Lname" : "rai", "age" : 18, "email" : "apoorva@gmail.com", "phone" : "8949325441", "exp" : 1 }
+{ "_id" : 8, "Fname" : "leo", "Lname" : "brown", "age" : 19, "email" : "lbrown@gmail.com", "phone" : "7623483569", "exp" : 2 }
+{ "_id" : 9, "Fname" : "Teo", "Lname" : "Smith", "age" : 28, "email" : "teo@gmail.com", "phone" : "3216667182", "exp" : 10 }
+{ "_id" : 10, "Fname" : "Ria", "Lname" : "Vinod", "age" : 27, "email" : "ria@gmail.com", "phone" : "8231468820", "exp" : 7 }
+> 
+> 
+> db.Empdetails.aggregate{$sort: {age:-1}}
+uncaught exception: SyntaxError: unexpected token: '{' :
+@(shell):1:23
+\>{$sort: {age:-1}}
+-1
+> {$match: {age:25}}
+25
+> {$match: {age:24}}
+24
+> db.Empdetails.aggregate([{$sort: {age:-1}}])
+{ "_id" : 6, "Fname" : "Faizah", "Lname" : "Ali", "age" : 30, "email" : "faizah@gmail.com", "phone" : "9436466601", "exp" : 8 }
+{ "_id" : 9, "Fname" : "Teo", "Lname" : "Smith", "age" : 28, "email" : "teo@gmail.com", "phone" : "3216667182", "exp" : 10 }
+{ "_id" : 4, "Fname" : "Nikita", "Lname" : "Sharma", "age" : 27, "email" : "nsharma@gmail.com", "phone" : "3214357812", "exp" : 2 }
+{ "_id" : 10, "Fname" : "Ria", "Lname" : "Vinod", "age" : 27, "email" : "ria@gmail.com", "phone" : "8231468820", "exp" : 7 }
+{ "_id" : 1, "Fname" : "Rohan", "Lname" : "Sharma", "age" : 26, "email" : "rsharma@gmail.com", "phone" : "9007008001", "exp" : 5 }
+{ "_id" : 2, "Fname" : "Rahul", "Lname" : "Roy", "age" : 24, "email" : "rahulroy@gmail.com", "phone" : "8946412341", "exp" : 6 }
+{ "_id" : 5, "Fname" : "Harsh", "Lname" : "Gupta", "age" : 24, "email" : "hargupta@gmail.com", "phone" : "3253468820", "exp" : 7 }
+{ "_id" : 3, "Fname" : "Rachel", "Lname" : "Green", "age" : 23, "email" : "rgreen@gmail.com", "phone" : "783952399", "exp" : 3 }
+{ "_id" : 8, "Fname" : "leo", "Lname" : "brown", "age" : 19, "email" : "lbrown@gmail.com", "phone" : "7623483569", "exp" : 2 }
+{ "_id" : 7, "Fname" : "Apoorva", "Lname" : "rai", "age" : 18, "email" : "apoorva@gmail.com", "phone" : "8949325441", "exp" : 1 }
+> db.Empdetails.aggregate([{$match: {age:25}}])
+> 
+> 
+> db.Empdetails.aggregate([{$match: {age:24}}])
+{ "_id" : 2, "Fname" : "Rahul", "Lname" : "Roy", "age" : 24, "email" : "rahulroy@gmail.com", "phone" : "8946412341", "exp" : 6 }
+{ "_id" : 5, "Fname" : "Harsh", "Lname" : "Gupta", "age" : 24, "email" : "hargupta@gmail.com", "phone" : "3253468820", "exp" : 7 }
+> db.Empdetails.aggregate([{$match: {age:{$gt:24}}}])
+{ "_id" : 1, "Fname" : "Rohan", "Lname" : "Sharma", "age" : 26, "email" : "rsharma@gmail.com", "phone" : "9007008001", "exp" : 5 }
+{ "_id" : 4, "Fname" : "Nikita", "Lname" : "Sharma", "age" : 27, "email" : "nsharma@gmail.com", "phone" : "3214357812", "exp" : 2 }
+{ "_id" : 6, "Fname" : "Faizah", "Lname" : "Ali", "age" : 30, "email" : "faizah@gmail.com", "phone" : "9436466601", "exp" : 8 }
+{ "_id" : 9, "Fname" : "Teo", "Lname" : "Smith", "age" : 28, "email" : "teo@gmail.com", "phone" : "3216667182", "exp" : 10 }
+{ "_id" : 10, "Fname" : "Ria", "Lname" : "Vinod", "age" : 27, "email" : "ria@gmail.com", "phone" : "8231468820", "exp" : 7 }
+> 
+> 
+> db.Empdetails.aggregate([{$group: {_id:"$age}}])
+uncaught exception: SyntaxError: "" literal not terminated before end of script :
+@(shell):1:48
+> db.Empdetails.aggregate([{$group: {_id:"$age"}}])
+{ "_id" : 30 }
+{ "_id" : 19 }
+{ "_id" : 28 }
+{ "_id" : 24 }
+{ "_id" : 27 }
+{ "_id" : 23 }
+{ "_id" : 18 }
+{ "_id" : 26 }
+> db.Empdetails.aggregate([{$group: {_id:"$age",name:"$name"}}])
+uncaught exception: Error: command failed: {
+	"ok" : 0,
+	"errmsg" : "The field 'name' must be an accumulator object",
+	"code" : 40234,
+	"codeName" : "Location40234"
+} : aggregate failed :
+_getErrorWithCode@src/mongo/shell/utils.js:25:13
+doassert@src/mongo/shell/assert.js:18:14
+_assertCommandWorked@src/mongo/shell/assert.js:639:17
+assert.commandWorked@src/mongo/shell/assert.js:729:16
+DB.prototype._runAggregate@src/mongo/shell/db.js:266:5
+DBCollection.prototype.aggregate@src/mongo/shell/collection.js:1058:12
+@(shell):1:1
+> db.Empdetails.aggregate([{$group: {_id:{age:"$age",name:"$name"}}])
+... 
+... 
+> 
+> db.Empdetails.aggregate([{$group: {_id:"$age",Fname:"$Fname"}}])
+uncaught exception: Error: command failed: {
+	"ok" : 0,
+	"errmsg" : "The field 'Fname' must be an accumulator object",
+	"code" : 40234,
+	"codeName" : "Location40234"
+} : aggregate failed :
+_getErrorWithCode@src/mongo/shell/utils.js:25:13
+doassert@src/mongo/shell/assert.js:18:14
+_assertCommandWorked@src/mongo/shell/assert.js:639:17
+assert.commandWorked@src/mongo/shell/assert.js:729:16
+DB.prototype._runAggregate@src/mongo/shell/db.js:266:5
+DBCollection.prototype.aggregate@src/mongo/shell/collection.js:1058:12
+@(shell):1:1
+> 
+> 
+> 
+> 
+> db.Empdetails.aggregate([{$group: {_id:"$age}}])
+uncaught exception: SyntaxError: "" literal not terminated before end of script :
+@(shell):1:48
+> 
+> 
+> db.Empdetails.aggregate([{$group: {_id:"$age"}}])
+{ "_id" : 28 }
+{ "_id" : 26 }
+{ "_id" : 30 }
+{ "_id" : 18 }
+{ "_id" : 23 }
+{ "_id" : 27 }
+{ "_id" : 24 }
+{ "_id" : 19 }
+admin1@admin1-HP-280-G4-MT-Business-PC:~$ wget https://downloads.mongodb.com/compass/mongodb-compass_1.26.0_amd64.deb
+--2021-03-31 08:59:00--  https://downloads.mongodb.com/compass/mongodb-compass_1.26.0_amd64.deb
+Resolving downloads.mongodb.com (downloads.mongodb.com)... 13.33.171.129, 13.33.171.11, 13.33.171.80, ...
+Connecting to downloads.mongodb.com (downloads.mongodb.com)|13.33.171.129|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 89015616 (85M) [application/octet-stream]
+Saving to: ‘mongodb-compass_1.26.0_amd64.deb’
+
+mongodb-compass_1.2 100%[===================>]  84.89M  69.2MB/s    in 1.2s    
+
+2021-03-31 08:59:01 (69.2 MB/s) - ‘mongodb-compass_1.26.0_amd64.deb’ saved [89015616/89015616]
+
+admin1@admin1-HP-280-G4-MT-Business-PC:~$ sudo dpkg -i mongodb-compass_1.26.0_amd64.deb
+[sudo] password for admin1: 
+Selecting previously unselected package mongodb-compass.
+(Reading database ... 213838 files and directories currently installed.)
+Preparing to unpack mongodb-compass_1.26.0_amd64.deb ...
+Unpacking mongodb-compass (1.26.0) ...
+dpkg: dependency problems prevent configuration of mongodb-compass:
+ mongodb-compass depends on libgconf-2-4 | libgconf2-4; however:
+  Package libgconf-2-4 is not installed.
+  Package libgconf2-4 is not installed.
+ mongodb-compass depends on libgconf-2-4; however:
+  Package libgconf-2-4 is not installed.
+
+dpkg: error processing package mongodb-compass (--install):
+ dependency problems - leaving unconfigured
+Processing triggers for desktop-file-utils (0.24-1ubuntu3) ...
+Processing triggers for gnome-menus (3.36.0-1ubuntu1) ...
+Processing triggers for mime-support (3.64ubuntu1) ...
+Errors were encountered while processing:
+ mongodb-compass
+admin1@admin1-HP-280-G4-MT-Business-PC:~$ mongodb-compass
+^Z
+[1]+  Stopped                 mongodb-compass
+admin1@admin1-HP-280-G4-MT-Business-PC:~$ sudo systemctl enable mongod
+[sudo] password for admin1: 
+admin1@admin1-HP-280-G4-MT-Business-PC:~$ mongodb-compass
+^Z[1]   Killed                  mongodb-compass
+
+[2]+  Stopped                 mongodb-compass
+admin1@admin1-HP-280-G4-MT-Business-PC:~$ mongo
+MongoDB shell version v4.4.4
+connecting to: mongodb://127.0.0.1:27017/?compressors=disabled&gssapiServiceName=mongodb
+Implicit session: session { "id" : UUID("30073e1d-19f7-4ff9-ba8a-c9bc0c492683") }
+MongoDB server version: 4.4.4
+---
+The server generated these startup warnings when booting: 
+        2021-03-31T08:56:04.327+05:30: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine. See http://dochub.mongodb.org/core/prodnotes-filesystem
+        2021-03-31T08:56:17.478+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+---
+---
+        Enable MongoDB's free cloud-based monitoring service, which will then receive and display
+        metrics about your deployment (disk utilization, CPU, operation statistics, etc).
+
+        The monitoring data will be available on a MongoDB website with a unique URL accessible to you
+        and anyone you share the URL with. MongoDB may use this information to make product
+        improvements and to suggest MongoDB products and deployment options to you.
+
+        To enable free monitoring, run the following command: db.enableFreeMonitoring()
+        To permanently disable this reminder, run the following command: db.disableFreeMonitoring()
+---
+> db
+test
+> show dbs
+Company  0.000GB
+Student  0.000GB
+admin    0.000GB
+config   0.000GB
+db       0.000GB
+ipl      0.000GB
+local    0.000GB
+mydb     0.000GB
+mynewdb  0.000GB
+newdb    0.000GB
+test     0.000GB
+> use Company
+switched to db Company
+> show collections
+Empdetails
+> db.Empdetails.aggregate([{]]);
+uncaught exception: SyntaxError: expected property name, got ']' :
+@(shell):1:26
+> db.Empdetails.aggregate([{}]);
+uncaught exception: Error: command failed: {
+	"ok" : 0,
+	"errmsg" : "A pipeline stage specification object must contain exactly one field.",
+	"code" : 40323,
+	"codeName" : "Location40323"
+} : aggregate failed :
+_getErrorWithCode@src/mongo/shell/utils.js:25:13
+doassert@src/mongo/shell/assert.js:18:14
+_assertCommandWorked@src/mongo/shell/assert.js:639:17
+assert.commandWorked@src/mongo/shell/assert.js:729:16
+DB.prototype._runAggregate@src/mongo/shell/db.js:266:5
+DBCollection.prototype.aggregate@src/mongo/shell/collection.js:1058:12
+@(shell):1:1
+> db.Empdetails.aggregate([{}])
+uncaught exception: Error: command failed: {
+	"ok" : 0,
+	"errmsg" : "A pipeline stage specification object must contain exactly one field.",
+	"code" : 40323,
+	"codeName" : "Location40323"
+} : aggregate failed :
+_getErrorWithCode@src/mongo/shell/utils.js:25:13
+doassert@src/mongo/shell/assert.js:18:14
+_assertCommandWorked@src/mongo/shell/assert.js:639:17
+assert.commandWorked@src/mongo/shell/assert.js:729:16
+DB.prototype._runAggregate@src/mongo/shell/db.js:266:5
+DBCollection.prototype.aggregate@src/mongo/shell/collection.js:1058:12
+@(shell):1:1
+> db.Empdetails.aggregate({})
+uncaught exception: Error: command failed: {
+	"ok" : 0,
+	"errmsg" : "A pipeline stage specification object must contain exactly one field.",
+	"code" : 40323,
+	"codeName" : "Location40323"
+} : aggregate failed :
+_getErrorWithCode@src/mongo/shell/utils.js:25:13
+doassert@src/mongo/shell/assert.js:18:14
+_assertCommandWorked@src/mongo/shell/assert.js:639:17
+assert.commandWorked@src/mongo/shell/assert.js:729:16
+DB.prototype._runAggregate@src/mongo/shell/db.js:266:5
+DBCollection.prototype.aggregate@src/mongo/shell/collection.js:1058:12
+@(shell):1:1
+> db.Empdetails.aggregate([])
+{ "_id" : 1, "Fname" : "Rohan", "Lname" : "Sharma", "age" : 26, "email" : "rsharma@gmail.com", "phone" : "9007008001", "exp" : 5 }
+{ "_id" : 2, "Fname" : "Rahul", "Lname" : "Roy", "age" : 24, "email" : "rahulroy@gmail.com", "phone" : "8946412341", "exp" : 6 }
+{ "_id" : 3, "Fname" : "Rachel", "Lname" : "Green", "age" : 23, "email" : "rgreen@gmail.com", "phone" : "783952399", "exp" : 3 }
+{ "_id" : 4, "Fname" : "Nikita", "Lname" : "Sharma", "age" : 27, "email" : "nsharma@gmail.com", "phone" : "3214357812", "exp" : 2 }
+{ "_id" : 5, "Fname" : "Harsh", "Lname" : "Gupta", "age" : 24, "email" : "hargupta@gmail.com", "phone" : "3253468820", "exp" : 7 }
+{ "_id" : 6, "Fname" : "Faizah", "Lname" : "Ali", "age" : 30, "email" : "faizah@gmail.com", "phone" : "9436466601", "exp" : 8 }
+{ "_id" : 7, "Fname" : "Apoorva", "Lname" : "rai", "age" : 18, "email" : "apoorva@gmail.com", "phone" : "8949325441", "exp" : 1 }
+{ "_id" : 8, "Fname" : "leo", "Lname" : "brown", "age" : 19, "email" : "lbrown@gmail.com", "phone" : "7623483569", "exp" : 2 }
+{ "_id" : 9, "Fname" : "Teo", "Lname" : "Smith", "age" : 28, "email" : "teo@gmail.com", "phone" : "3216667182", "exp" : 10 }
+{ "_id" : 10, "Fname" : "Ria", "Lname" : "Vinod", "age" : 27, "email" : "ria@gmail.com", "phone" : "8231468820", "exp" : 7 }
+> 
+> 
+> db.Empdetails.aggregate{$sort: {age:-1}}
+uncaught exception: SyntaxError: unexpected token: '{' :
+@(shell):1:23
+\>{$sort: {age:-1}}
+-1
+> {$match: {age:25}}
+25
+> {$match: {age:24}}
+24
+> db.Empdetails.aggregate([{$sort: {age:-1}}])
+{ "_id" : 6, "Fname" : "Faizah", "Lname" : "Ali", "age" : 30, "email" : "faizah@gmail.com", "phone" : "9436466601", "exp" : 8 }
+{ "_id" : 9, "Fname" : "Teo", "Lname" : "Smith", "age" : 28, "email" : "teo@gmail.com", "phone" : "3216667182", "exp" : 10 }
+{ "_id" : 4, "Fname" : "Nikita", "Lname" : "Sharma", "age" : 27, "email" : "nsharma@gmail.com", "phone" : "3214357812", "exp" : 2 }
+{ "_id" : 10, "Fname" : "Ria", "Lname" : "Vinod", "age" : 27, "email" : "ria@gmail.com", "phone" : "8231468820", "exp" : 7 }
+{ "_id" : 1, "Fname" : "Rohan", "Lname" : "Sharma", "age" : 26, "email" : "rsharma@gmail.com", "phone" : "9007008001", "exp" : 5 }
+{ "_id" : 2, "Fname" : "Rahul", "Lname" : "Roy", "age" : 24, "email" : "rahulroy@gmail.com", "phone" : "8946412341", "exp" : 6 }
+{ "_id" : 5, "Fname" : "Harsh", "Lname" : "Gupta", "age" : 24, "email" : "hargupta@gmail.com", "phone" : "3253468820", "exp" : 7 }
+{ "_id" : 3, "Fname" : "Rachel", "Lname" : "Green", "age" : 23, "email" : "rgreen@gmail.com", "phone" : "783952399", "exp" : 3 }
+{ "_id" : 8, "Fname" : "leo", "Lname" : "brown", "age" : 19, "email" : "lbrown@gmail.com", "phone" : "7623483569", "exp" : 2 }
+{ "_id" : 7, "Fname" : "Apoorva", "Lname" : "rai", "age" : 18, "email" : "apoorva@gmail.com", "phone" : "8949325441", "exp" : 1 }
+> db.Empdetails.aggregate([{$match: {age:25}}])
+> 
+> 
+> db.Empdetails.aggregate([{$match: {age:24}}])
+{ "_id" : 2, "Fname" : "Rahul", "Lname" : "Roy", "age" : 24, "email" : "rahulroy@gmail.com", "phone" : "8946412341", "exp" : 6 }
+{ "_id" : 5, "Fname" : "Harsh", "Lname" : "Gupta", "age" : 24, "email" : "hargupta@gmail.com", "phone" : "3253468820", "exp" : 7 }
+> db.Empdetails.aggregate([{$match: {age:{$gt:24}}}])
+{ "_id" : 1, "Fname" : "Rohan", "Lname" : "Sharma", "age" : 26, "email" : "rsharma@gmail.com", "phone" : "9007008001", "exp" : 5 }
+{ "_id" : 4, "Fname" : "Nikita", "Lname" : "Sharma", "age" : 27, "email" : "nsharma@gmail.com", "phone" : "3214357812", "exp" : 2 }
+{ "_id" : 6, "Fname" : "Faizah", "Lname" : "Ali", "age" : 30, "email" : "faizah@gmail.com", "phone" : "9436466601", "exp" : 8 }
+{ "_id" : 9, "Fname" : "Teo", "Lname" : "Smith", "age" : 28, "email" : "teo@gmail.com", "phone" : "3216667182", "exp" : 10 }
+{ "_id" : 10, "Fname" : "Ria", "Lname" : "Vinod", "age" : 27, "email" : "ria@gmail.com", "phone" : "8231468820", "exp" : 7 }
+> 
+> 
+> db.Empdetails.aggregate([{$group: {_id:"$age}}])
+uncaught exception: SyntaxError: "" literal not terminated before end of script :
+@(shell):1:48
+> db.Empdetails.aggregate([{$group: {_id:"$age"}}])
+{ "_id" : 30 }
+{ "_id" : 19 }
+{ "_id" : 28 }
+{ "_id" : 24 }
+{ "_id" : 27 }
+{ "_id" : 23 }
+{ "_id" : 18 }
+{ "_id" : 26 }
+> db.Empdetails.aggregate([{$group: {_id:"$age",name:"$name"}}])
+uncaught exception: Error: command failed: {
+	"ok" : 0,
+	"errmsg" : "The field 'name' must be an accumulator object",
+	"code" : 40234,
+	"codeName" : "Location40234"
+} : aggregate failed :
+_getErrorWithCode@src/mongo/shell/utils.js:25:13
+doassert@src/mongo/shell/assert.js:18:14
+_assertCommandWorked@src/mongo/shell/assert.js:639:17
+assert.commandWorked@src/mongo/shell/assert.js:729:16
+DB.prototype._runAggregate@src/mongo/shell/db.js:266:5
+DBCollection.prototype.aggregate@src/mongo/shell/collection.js:1058:12
+@(shell):1:1
+> db.Empdetails.aggregate([{$group: {_id:{age:"$age",name:"$name"}}])
+... 
+... 
+> 
+> db.Empdetails.aggregate([{$group: {_id:"$age",Fname:"$Fname"}}])
+uncaught exception: Error: command failed: {
+	"ok" : 0,
+	"errmsg" : "The field 'Fname' must be an accumulator object",
+	"code" : 40234,
+	"codeName" : "Location40234"
+} : aggregate failed :
+_getErrorWithCode@src/mongo/shell/utils.js:25:13
+doassert@src/mongo/shell/assert.js:18:14
+_assertCommandWorked@src/mongo/shell/assert.js:639:17
+assert.commandWorked@src/mongo/shell/assert.js:729:16
+DB.prototype._runAggregate@src/mongo/shell/db.js:266:5
+DBCollection.prototype.aggregate@src/mongo/shell/collection.js:1058:12
+@(shell):1:1
+> 
+> 
+> 
+> 
+> db.Empdetails.aggregate([{$group: {_id:"$age}}])
+uncaught exception: SyntaxError: "" literal not terminated before end of script :
+@(shell):1:48
+> 
+> 
+> db.Empdetails.aggregate([{$group: {_id:"$age"}}])
+{ "_id" : 28 }
+{ "_id" : 26 }
+{ "_id" : 30 }
+{ "_id" : 18 }
+{ "_id" : 23 }
+{ "_id" : 27 }
+{ "_id" : 24 }
+{ "_id" : 19 }
+admin1@admin1-HP-280-G4-MT-Business-PC:~$ wget https://downloads.mongodb.com/compass/mongodb-compass_1.26.0_amd64.deb
+--2021-03-31 08:59:00--  https://downloads.mongodb.com/compass/mongodb-compass_1.26.0_amd64.deb
+Resolving downloads.mongodb.com (downloads.mongodb.com)... 13.33.171.129, 13.33.171.11, 13.33.171.80, ...
+Connecting to downloads.mongodb.com (downloads.mongodb.com)|13.33.171.129|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 89015616 (85M) [application/octet-stream]
+Saving to: ‘mongodb-compass_1.26.0_amd64.deb’
+
+mongodb-compass_1.2 100%[===================>]  84.89M  69.2MB/s    in 1.2s    
+
+2021-03-31 08:59:01 (69.2 MB/s) - ‘mongodb-compass_1.26.0_amd64.deb’ saved [89015616/89015616]
+
+admin1@admin1-HP-280-G4-MT-Business-PC:~$ sudo dpkg -i mongodb-compass_1.26.0_amd64.deb
+[sudo] password for admin1: 
+Selecting previously unselected package mongodb-compass.
+(Reading database ... 213838 files and directories currently installed.)
+Preparing to unpack mongodb-compass_1.26.0_amd64.deb ...
+Unpacking mongodb-compass (1.26.0) ...
+dpkg: dependency problems prevent configuration of mongodb-compass:
+ mongodb-compass depends on libgconf-2-4 | libgconf2-4; however:
+  Package libgconf-2-4 is not installed.
+  Package libgconf2-4 is not installed.
+ mongodb-compass depends on libgconf-2-4; however:
+  Package libgconf-2-4 is not installed.
+
+dpkg: error processing package mongodb-compass (--install):
+ dependency problems - leaving unconfigured
+Processing triggers for desktop-file-utils (0.24-1ubuntu3) ...
+Processing triggers for gnome-menus (3.36.0-1ubuntu1) ...
+Processing triggers for mime-support (3.64ubuntu1) ...
+Errors were encountered while processing:
+ mongodb-compass
+admin1@admin1-HP-280-G4-MT-Business-PC:~$ mongodb-compass
+^Z
+[1]+  Stopped                 mongodb-compass
+admin1@admin1-HP-280-G4-MT-Business-PC:~$ sudo systemctl enable mongod
+[sudo] password for admin1: 
+admin1@admin1-HP-280-G4-MT-Business-PC:~$ mongodb-compass
+^Z[1]   Killed                  mongodb-compass
+
+[2]+  Stopped                 mongodb-compass
+admin1@admin1-HP-280-G4-MT-Business-PC:~$ mongo
+MongoDB shell version v4.4.4
+connecting to: mongodb://127.0.0.1:27017/?compressors=disabled&gssapiServiceName=mongodb
+Implicit session: session { "id" : UUID("30073e1d-19f7-4ff9-ba8a-c9bc0c492683") }
+MongoDB server version: 4.4.4
+---
+The server generated these startup warnings when booting: 
+        2021-03-31T08:56:04.327+05:30: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine. See http://dochub.mongodb.org/core/prodnotes-filesystem
+        2021-03-31T08:56:17.478+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+---
+---
+        Enable MongoDB's free cloud-based monitoring service, which will then receive and display
+        metrics about your deployment (disk utilization, CPU, operation statistics, etc).
+
+        The monitoring data will be available on a MongoDB website with a unique URL accessible to you
+        and anyone you share the URL with. MongoDB may use this information to make product
+        improvements and to suggest MongoDB products and deployment options to you.
+
+        To enable free monitoring, run the following command: db.enableFreeMonitoring()
+        To permanently disable this reminder, run the following command: db.disableFreeMonitoring()
+---
+> db
+test
+> show dbs
+Company  0.000GB
+Student  0.000GB
+admin    0.000GB
+config   0.000GB
+db       0.000GB
+ipl      0.000GB
+local    0.000GB
+mydb     0.000GB
+mynewdb  0.000GB
+newdb    0.000GB
+test     0.000GB
+> use Company
+switched to db Company
+> show collections
+Empdetails
+> db.Empdetails.aggregate([{]]);
+uncaught exception: SyntaxError: expected property name, got ']' :
+@(shell):1:26
+> db.Empdetails.aggregate([{}]);
+uncaught exception: Error: command failed: {
+	"ok" : 0,
+	"errmsg" : "A pipeline stage specification object must contain exactly one field.",
+	"code" : 40323,
+	"codeName" : "Location40323"
+} : aggregate failed :
+_getErrorWithCode@src/mongo/shell/utils.js:25:13
+doassert@src/mongo/shell/assert.js:18:14
+_assertCommandWorked@src/mongo/shell/assert.js:639:17
+assert.commandWorked@src/mongo/shell/assert.js:729:16
+DB.prototype._runAggregate@src/mongo/shell/db.js:266:5
+DBCollection.prototype.aggregate@src/mongo/shell/collection.js:1058:12
+@(shell):1:1
+> db.Empdetails.aggregate([{}])
+uncaught exception: Error: command failed: {
+	"ok" : 0,
+	"errmsg" : "A pipeline stage specification object must contain exactly one field.",
+	"code" : 40323,
+	"codeName" : "Location40323"
+} : aggregate failed :
+_getErrorWithCode@src/mongo/shell/utils.js:25:13
+doassert@src/mongo/shell/assert.js:18:14
+_assertCommandWorked@src/mongo/shell/assert.js:639:17
+assert.commandWorked@src/mongo/shell/assert.js:729:16
+DB.prototype._runAggregate@src/mongo/shell/db.js:266:5
+DBCollection.prototype.aggregate@src/mongo/shell/collection.js:1058:12
+@(shell):1:1
+> db.Empdetails.aggregate({})
+uncaught exception: Error: command failed: {
+	"ok" : 0,
+	"errmsg" : "A pipeline stage specification object must contain exactly one field.",
+	"code" : 40323,
+	"codeName" : "Location40323"
+} : aggregate failed :
+_getErrorWithCode@src/mongo/shell/utils.js:25:13
+doassert@src/mongo/shell/assert.js:18:14
+_assertCommandWorked@src/mongo/shell/assert.js:639:17
+assert.commandWorked@src/mongo/shell/assert.js:729:16
+DB.prototype._runAggregate@src/mongo/shell/db.js:266:5
+DBCollection.prototype.aggregate@src/mongo/shell/collection.js:1058:12
+@(shell):1:1
+> db.Empdetails.aggregate([])
+{ "_id" : 1, "Fname" : "Rohan", "Lname" : "Sharma", "age" : 26, "email" : "rsharma@gmail.com", "phone" : "9007008001", "exp" : 5 }
+{ "_id" : 2, "Fname" : "Rahul", "Lname" : "Roy", "age" : 24, "email" : "rahulroy@gmail.com", "phone" : "8946412341", "exp" : 6 }
+{ "_id" : 3, "Fname" : "Rachel", "Lname" : "Green", "age" : 23, "email" : "rgreen@gmail.com", "phone" : "783952399", "exp" : 3 }
+{ "_id" : 4, "Fname" : "Nikita", "Lname" : "Sharma", "age" : 27, "email" : "nsharma@gmail.com", "phone" : "3214357812", "exp" : 2 }
+{ "_id" : 5, "Fname" : "Harsh", "Lname" : "Gupta", "age" : 24, "email" : "hargupta@gmail.com", "phone" : "3253468820", "exp" : 7 }
+{ "_id" : 6, "Fname" : "Faizah", "Lname" : "Ali", "age" : 30, "email" : "faizah@gmail.com", "phone" : "9436466601", "exp" : 8 }
+{ "_id" : 7, "Fname" : "Apoorva", "Lname" : "rai", "age" : 18, "email" : "apoorva@gmail.com", "phone" : "8949325441", "exp" : 1 }
+{ "_id" : 8, "Fname" : "leo", "Lname" : "brown", "age" : 19, "email" : "lbrown@gmail.com", "phone" : "7623483569", "exp" : 2 }
+{ "_id" : 9, "Fname" : "Teo", "Lname" : "Smith", "age" : 28, "email" : "teo@gmail.com", "phone" : "3216667182", "exp" : 10 }
+{ "_id" : 10, "Fname" : "Ria", "Lname" : "Vinod", "age" : 27, "email" : "ria@gmail.com", "phone" : "8231468820", "exp" : 7 }
+> 
+> 
+> db.Empdetails.aggregate{$sort: {age:-1}}
+uncaught exception: SyntaxError: unexpected token: '{' :
+@(shell):1:23
+\>{$sort: {age:-1}}
+-1
+> {$match: {age:25}}
+25
+> {$match: {age:24}}
+24
+> db.Empdetails.aggregate([{$sort: {age:-1}}])
+{ "_id" : 6, "Fname" : "Faizah", "Lname" : "Ali", "age" : 30, "email" : "faizah@gmail.com", "phone" : "9436466601", "exp" : 8 }
+{ "_id" : 9, "Fname" : "Teo", "Lname" : "Smith", "age" : 28, "email" : "teo@gmail.com", "phone" : "3216667182", "exp" : 10 }
+{ "_id" : 4, "Fname" : "Nikita", "Lname" : "Sharma", "age" : 27, "email" : "nsharma@gmail.com", "phone" : "3214357812", "exp" : 2 }
+{ "_id" : 10, "Fname" : "Ria", "Lname" : "Vinod", "age" : 27, "email" : "ria@gmail.com", "phone" : "8231468820", "exp" : 7 }
+{ "_id" : 1, "Fname" : "Rohan", "Lname" : "Sharma", "age" : 26, "email" : "rsharma@gmail.com", "phone" : "9007008001", "exp" : 5 }
+{ "_id" : 2, "Fname" : "Rahul", "Lname" : "Roy", "age" : 24, "email" : "rahulroy@gmail.com", "phone" : "8946412341", "exp" : 6 }
+{ "_id" : 5, "Fname" : "Harsh", "Lname" : "Gupta", "age" : 24, "email" : "hargupta@gmail.com", "phone" : "3253468820", "exp" : 7 }
+{ "_id" : 3, "Fname" : "Rachel", "Lname" : "Green", "age" : 23, "email" : "rgreen@gmail.com", "phone" : "783952399", "exp" : 3 }
+{ "_id" : 8, "Fname" : "leo", "Lname" : "brown", "age" : 19, "email" : "lbrown@gmail.com", "phone" : "7623483569", "exp" : 2 }
+{ "_id" : 7, "Fname" : "Apoorva", "Lname" : "rai", "age" : 18, "email" : "apoorva@gmail.com", "phone" : "8949325441", "exp" : 1 }
+> db.Empdetails.aggregate([{$match: {age:25}}])
+> 
+> 
+> db.Empdetails.aggregate([{$match: {age:24}}])
+{ "_id" : 2, "Fname" : "Rahul", "Lname" : "Roy", "age" : 24, "email" : "rahulroy@gmail.com", "phone" : "8946412341", "exp" : 6 }
+{ "_id" : 5, "Fname" : "Harsh", "Lname" : "Gupta", "age" : 24, "email" : "hargupta@gmail.com", "phone" : "3253468820", "exp" : 7 }
+> db.Empdetails.aggregate([{$match: {age:{$gt:24}}}])
+{ "_id" : 1, "Fname" : "Rohan", "Lname" : "Sharma", "age" : 26, "email" : "rsharma@gmail.com", "phone" : "9007008001", "exp" : 5 }
+{ "_id" : 4, "Fname" : "Nikita", "Lname" : "Sharma", "age" : 27, "email" : "nsharma@gmail.com", "phone" : "3214357812", "exp" : 2 }
+{ "_id" : 6, "Fname" : "Faizah", "Lname" : "Ali", "age" : 30, "email" : "faizah@gmail.com", "phone" : "9436466601", "exp" : 8 }
+{ "_id" : 9, "Fname" : "Teo", "Lname" : "Smith", "age" : 28, "email" : "teo@gmail.com", "phone" : "3216667182", "exp" : 10 }
+{ "_id" : 10, "Fname" : "Ria", "Lname" : "Vinod", "age" : 27, "email" : "ria@gmail.com", "phone" : "8231468820", "exp" : 7 }
+> 
+> 
+> db.Empdetails.aggregate([{$group: {_id:"$age}}])
+uncaught exception: SyntaxError: "" literal not terminated before end of script :
+@(shell):1:48
+> db.Empdetails.aggregate([{$group: {_id:"$age"}}])
+{ "_id" : 30 }
+{ "_id" : 19 }
+{ "_id" : 28 }
+{ "_id" : 24 }
+{ "_id" : 27 }
+{ "_id" : 23 }
+{ "_id" : 18 }
+{ "_id" : 26 }
+> db.Empdetails.aggregate([{$group: {_id:"$age",name:"$name"}}])
+uncaught exception: Error: command failed: {
+	"ok" : 0,
+	"errmsg" : "The field 'name' must be an accumulator object",
+	"code" : 40234,
+	"codeName" : "Location40234"
+} : aggregate failed :
+_getErrorWithCode@src/mongo/shell/utils.js:25:13
+doassert@src/mongo/shell/assert.js:18:14
+_assertCommandWorked@src/mongo/shell/assert.js:639:17
+assert.commandWorked@src/mongo/shell/assert.js:729:16
+DB.prototype._runAggregate@src/mongo/shell/db.js:266:5
+DBCollection.prototype.aggregate@src/mongo/shell/collection.js:1058:12
+@(shell):1:1
+> db.Empdetails.aggregate([{$group: {_id:{age:"$age",name:"$name"}}])
+... 
+... 
+> 
+> db.Empdetails.aggregate([{$group: {_id:"$age",Fname:"$Fname"}}])
+uncaught exception: Error: command failed: {
+	"ok" : 0,
+	"errmsg" : "The field 'Fname' must be an accumulator object",
+	"code" : 40234,
+	"codeName" : "Location40234"
+} : aggregate failed :
+_getErrorWithCode@src/mongo/shell/utils.js:25:13
+doassert@src/mongo/shell/assert.js:18:14
+_assertCommandWorked@src/mongo/shell/assert.js:639:17
+assert.commandWorked@src/mongo/shell/assert.js:729:16
+DB.prototype._runAggregate@src/mongo/shell/db.js:266:5
+DBCollection.prototype.aggregate@src/mongo/shell/collection.js:1058:12
+@(shell):1:1
+> 
+> 
+> 
+> 
+> db.Empdetails.aggregate([{$group: {_id:"$age}}])
+uncaught exception: SyntaxError: "" literal not terminated before end of script :
+@(shell):1:48
+> 
+> 
+> db.Empdetails.aggregate([{$group: {_id:"$age"}}])
+{ "_id" : 28 }
+{ "_id" : 26 }
+{ "_id" : 30 }
+{ "_id" : 18 }
+{ "_id" : 23 }
+{ "_id" : 27 }
+{ "_id" : 24 }
+{ "_id" : 19 }
+

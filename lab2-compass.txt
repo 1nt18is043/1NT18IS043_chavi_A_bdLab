@@ -1,0 +1,88 @@
+{
+ filter: {
+  Fname: 'Rachel'
+ }
+}
+
+
+{
+ filter: {
+  $and: [
+   {
+    Lname: 'Nayak'
+   },
+   {
+    exp: 5
+   }
+  ]
+ }
+}
+
+
+{
+ filter: {
+  $and: [
+   {
+    Lname: 'Smith'
+   },
+   {
+    exp: 10
+   }
+  ]
+ }
+}
+
+{
+ filter: {
+  $or: [
+   {
+    exp: 6
+   },
+   {
+    exp: 5
+   }
+  ]
+ }
+}
+
+{
+ filter: {
+  Age: {
+   $not: {
+    $gt: 24
+   }
+  }
+ }
+}
+
+{
+ filter: {
+  Age: {
+   $ne: 20
+  }
+ }
+}
+
+{
+ filter: {
+  Age: {
+   $ne: 20
+  }
+ }
+}
+
+{
+ filter: {
+  Age: {
+   $lte: 20
+  }
+ }
+}
+
+{
+ filter: {
+  _id: {
+   $ne: 1
+  }
+ }
+}
