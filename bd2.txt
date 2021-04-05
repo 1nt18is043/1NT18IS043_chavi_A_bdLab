@@ -1,3 +1,8 @@
+LAB 2
+
+Date: 31st March 2021
+
+
 admin1@admin1-HP-280-G4-MT-Business-PC:~$ wget https://downloads.mongodb.com/compass/mongodb-compass_1.26.0_amd64.deb
 --2021-03-31 08:59:00--  https://downloads.mongodb.com/compass/mongodb-compass_1.26.0_amd64.deb
 Resolving downloads.mongodb.com (downloads.mongodb.com)... 13.33.171.129, 13.33.171.11, 13.33.171.80, ...
