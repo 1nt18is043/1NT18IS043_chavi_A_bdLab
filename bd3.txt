@@ -1,0 +1,134 @@
+mongo
+MongoDB shell version v4.4.4
+connecting to: mongodb://127.0.0.1:27017/?compressors=disabled&gssapiServiceName=mongodb
+Implicit session: session { "id" : UUID("e5c28f00-cc39-4184-8cb8-a0248a19d8cc") }
+MongoDB server version: 4.4.4
+---
+The server generated these startup warnings when booting: 
+        2021-04-05T08:55:32.952+05:30: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine. See http://dochub.mongodb.org/core/prodnotes-filesystem
+        2021-04-05T08:55:41.765+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+---
+---
+        Enable MongoDB's free cloud-based monitoring service, which will then receive and display
+        metrics about your deployment (disk utilization, CPU, operation statistics, etc).
+
+        The monitoring data will be available on a MongoDB website with a unique URL accessible to you
+        and anyone you share the URL with. MongoDB may use this information to make product
+        improvements and to suggest MongoDB products and deployment options to you.
+
+        To enable free monitoring, run the following command: db.enableFreeMonitoring()
+        To permanently disable this reminder, run the following command: db.disableFreeMonitoring()
+---
+> show dbs
+Company     0.000GB
+Student     0.000GB
+StudentMS   0.000GB
+admin       0.000GB
+config      0.000GB
+db          0.000GB
+employeeDB  0.000GB
+ipl         0.000GB
+local       0.000GB
+mydb        0.000GB
+mynewdb     0.000GB
+new         0.000GB
+newdb       0.000GB
+test        0.000GB
+> use customer
+switched to db customer
+> db.createCollection("customers")
+{ "ok" : 1 }
+> db.customers.insertMany([{_id:1 cust_id:"a123", amt:500, status:"A"}, {_id:2, cust_id:"a123", amt:250, status:"A"}, {
+... _id:3,
+... 
+... 
+> db.customers.insertMany([{_id:1 cust_id:"a123", amt:500, status:"A"}, {_id:2, cust_id:"a123", amt:250, status:"A"}, {
+... 
+... 
+> 
+> db.customers.insertMany([{_id:1, cust_id:"a123", amt:500, status:"A"}, {_id:2, cust_id:"a123", amt:250, status:"A"}, {_id:3, cust_id:"b213", amt:200, status:"A"}, {_id:4, cust_id:"a123", amt:300, status:"D"}])
+{ "acknowledged" : true, "insertedIds" : [ 1, 2, 3, 4 ] }
+> 
+> db.customers.aggregate([{$match:{$status:"A"}}])
+uncaught exception: Error: command failed: {
+	"ok" : 0,
+	"errmsg" : "unknown top level operator: $status",
+	"code" : 2,
+	"codeName" : "BadValue"
+} : aggregate failed :
+_getErrorWithCode@src/mongo/shell/utils.js:25:13
+doassert@src/mongo/shell/assert.js:18:14
+_assertCommandWorked@src/mongo/shell/assert.js:639:17
+assert.commandWorked@src/mongo/shell/assert.js:729:16
+DB.prototype._runAggregate@src/mongo/shell/db.js:266:5
+DBCollection.prototype.aggregate@src/mongo/shell/collection.js:1058:12
+@(shell):1:1
+> 
+> 
+> 
+> 
+> db.customers.aggregate([{$match:{status:"A"}}])
+{ "_id" : 1, "cust_id" : "a123", "amt" : 500, "status" : "A" }
+{ "_id" : 2, "cust_id" : "a123", "amt" : 250, "status" : "A" }
+{ "_id" : 3, "cust_id" : "b213", "amt" : 200, "status" : "A" }
+> 
+> 
+> db.customers.aggregate([{$group:{_id:"$cust_id", "max-val":{$max:"$amt"}}}])
+{ "_id" : "b213", "max-val" : 200 }
+{ "_id" : "a123", "max-val" : 500 }
+> 
+> 
+> db.customers.aggregate({$group:{_id:null, max:{$max:"$amt"}}})
+{ "_id" : null, "max" : 500 }
+> 
+> 
+> db.customers.aggregate([{$group:{_id:__id, "max-val":{$max:"$amt"}}}])
+uncaught exception: ReferenceError: __id is not defined :
+@(shell):1:34
+> db.customers.aggregate([{$group:{_id:_id, "max-val":{$max:"$amt"}}}])
+uncaught exception: ReferenceError: _id is not defined :
+@(shell):1:34
+> 
+> 
+> db.customers.aggregate([{$group:{_id:"_id", "max-val":{$max:"$amt"}}}])
+{ "_id" : "_id", "max-val" : 500 }
+> 
+> 
+> 
+> db.customers.aggregate([{$group:{_id:"$cust_id",count:{$sum:1}}}])
+{ "_id" : "b213", "count" : 1 }
+{ "_id" : "a123", "count" : 3 }
+> 
+> 
+> db.customers.aggregate([{$project:{cust_id:1, status:1, _id:0}}])
+{ "cust_id" : "a123", "status" : "A" }
+{ "cust_id" : "a123", "status" : "A" }
+{ "cust_id" : "b213", "status" : "A" }
+{ "cust_id" : "a123", "status" : "D" }
+> 
+> 
+> db.customers.aggregate([{$limit:3}])
+{ "_id" : 1, "cust_id" : "a123", "amt" : 500, "status" : "A" }
+{ "_id" : 2, "cust_id" : "a123", "amt" : 250, "status" : "A" }
+{ "_id" : 3, "cust_id" : "b213", "amt" : 200, "status" : "A" }
+> 
+> 
+> db.customers.find().pretty()
+{ "_id" : 1, "cust_id" : "a123", "amt" : 500, "status" : "A" }
+{ "_id" : 2, "cust_id" : "a123", "amt" : 250, "status" : "A" }
+{ "_id" : 3, "cust_id" : "b213", "amt" : 200, "status" : "A" }
+{ "_id" : 4, "cust_id" : "a123", "amt" : 300, "status" : "D" }
+> 
+> 
+> db.customers.aggregate([{$group:{_id:"$cust_id",sum:{$sum:"$amt"}}}])
+{ "_id" : "a123", "sum" : 1050 }
+{ "_id" : "b213", "sum" : 200 }
+> db.customers.aggregate([{$group:{_id:"$cust_id",sumn:{$sum:"$amt"}}}])
+{ "_id" : "a123", "sumn" : 1050 }
+{ "_id" : "b213", "sumn" : 200 }
+> 
+> 
+> db.customers.aggregate([{$match:{amt:{$gte:300}}}])
+{ "_id" : 1, "cust_id" : "a123", "amt" : 500, "status" : "A" }
+{ "_id" : 4, "cust_id" : "a123", "amt" : 300, "status" : "D" }
+
